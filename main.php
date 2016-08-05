@@ -17,11 +17,11 @@ $outFile->writeRow(['number', 'someText', 'double_number']);
 
 // read input file and write rows of output file
 $inFile = new Keboola\Csv\CsvFile($dataDir . 'in' . DIRECTORY_SEPARATOR . 'tables' . DIRECTORY_SEPARATOR . 'source.csv');
-foreach($inFile as $rowNum => $row) {
-	if ($rowNum == 0) {
-		// skip header
-		continue;
-	}
+foreach ($inFile as $rowNum => $row) {
+    if ($rowNum == 0) {
+        // skip header
+        continue;
+    }
     $outFile->writeRow([
         $row[0],
         $row[1],
