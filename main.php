@@ -28,3 +28,13 @@ foreach ($inFile as $rowNum => $row) {
         $row[0] * $multiplier
     ]);
 }
+
+try {
+
+} catch (InvalidArgumentException $e) {
+    echo $e->getMessage();
+    exit(1);
+} catch (\Throwable) {
+    echo $e->getMessage();
+    exit(2);
+}
