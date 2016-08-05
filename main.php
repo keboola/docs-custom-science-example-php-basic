@@ -3,22 +3,24 @@
 require "vendor/autoload.php";
 
 // read the configuration file
-$configFile = getenv('KBC_DATADIR') . DIRECTORY_SEPARATOR . 'config.json';
+$dataDir = getenv('KBC_DATADIR') . DIRECTORY_SEPARATOR;
+$configFile = $dataDir . 'config.json';
 $config = json_decode(file_get_contents($configFile), true);
 
-$length = $config['parameters']['length'];
-$count = $config['parameters']['count'];
+$multiplier = $config['parameters']['multiplier'];
 
 // create output file and write header
-$csv = new \Keboola\Csv\CsvFile(
-    getenv('KBC_DATADIR') . DIRECTORY_SEPARATOR . 'out' . DIRECTORY_SEPARATOR . 'tables' . DIRECTORY_SEPARATOR . 'result.csv'
+$outFile = new \Keboola\Csv\CsvFile(
+    getenv('KBC_DATADIR') . DIRECTORY_SEPARATOR . 'out' . DIRECTORY_SEPARATOR . 'tables' . DIRECTORY_SEPARATOR . 'destination.csv'
 );
-$csv->writeRow(['id', 'string']);
+$outFile->writeRow(['number', 'someText', 'double_number']);
 
-// generate some roandom rows
-for ($i = 0; $i < $count; $i++) {
-    $csv->writeRow([
-        $i,
-        substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, $length),
+// read input file and write rows of output file
+$inFile = new Keboola\Csv\CsvFile(dataDir . DIRECTORY_SEPARATOR . 'in' . DIRECTORY_SEPARATOR . 'tables' . DIRECTORY_SEPARATOR . 'source.csv');
+foreach($inFile as $row) {
+    $outFile->writeRow([
+        $row[0],
+        $row[1],
+        $row[0] * $multiplier
     ]);
 }
