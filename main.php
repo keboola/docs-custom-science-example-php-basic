@@ -11,12 +11,12 @@ $multiplier = $config['parameters']['multiplier'];
 
 // create output file and write header
 $outFile = new \Keboola\Csv\CsvFile(
-    getenv('KBC_DATADIR') . DIRECTORY_SEPARATOR . 'out' . DIRECTORY_SEPARATOR . 'tables' . DIRECTORY_SEPARATOR . 'destination.csv'
+    $dataDir . 'out' . DIRECTORY_SEPARATOR . 'tables' . DIRECTORY_SEPARATOR . 'destination.csv'
 );
 $outFile->writeRow(['number', 'someText', 'double_number']);
 
 // read input file and write rows of output file
-$inFile = new Keboola\Csv\CsvFile(dataDir . DIRECTORY_SEPARATOR . 'in' . DIRECTORY_SEPARATOR . 'tables' . DIRECTORY_SEPARATOR . 'source.csv');
+$inFile = new Keboola\Csv\CsvFile($dataDir . 'in' . DIRECTORY_SEPARATOR . 'tables' . DIRECTORY_SEPARATOR . 'source.csv');
 foreach($inFile as $row) {
     $outFile->writeRow([
         $row[0],
